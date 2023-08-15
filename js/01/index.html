@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Copy Paste In Textarea</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="css/owl.carousel.min.css" rel="stylesheet">
+    <link href="css/owl.theme.default.min.css" rel="stylesheet">
+    <script src="js/index.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+    <h1>Copy Paste Event In JS</h1>
+    <p>Copy paste file/image manipulation directly into the textarea</p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <label for="lines-height">Paste Image</label>
+            <textarea type="text" id="lines-height" rows="6" class="form-control form-control-lg bg-light border-light type_msg" autofocus></textarea>
+        </div>
+    </div>
+</div>
+
+<!--INIT MODAL-->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="display-images-preview" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Images</h5>
+            </div>
+            <div class="modal-body">
+                <div id="slider">
+
+                </div>
+
+                <ul class="list-inline" id="slider_nav">
+
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Hide</button>
+                <button type="button" class="btn btn-primary" onclick="sendFilesToServer()">Send To Server</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
