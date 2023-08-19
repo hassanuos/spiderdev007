@@ -8,8 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
             $("#slider").empty();
             $("#slider_nav").empty();
             localStorage.setItem('files_length', items.length);
-            for( var i = 0, len = items.length; i < len; ++i ) {
-                var item = items[i];
+            for( let i = 0, len = items.length; i < len; ++i ) {
+                const item = items[i];
+                console.log("item => ", item);
                 if( item.kind === "file" && (item.type.indexOf('image/') !== -1)) {
                     if(i === 0){
                         _modal = $("#display-images-preview");
@@ -84,4 +85,76 @@ function playSlider(){
         func_obj.change_slide(_this);
         clearInterval(setting.interval_all);
     });
+}
+
+function sendFilesToServer() {
+    let files = parseInt(localStorage.getItem("files_length"));
+    // console.log(files);
+    // return ;
+    let $imagePreview = $("#display-images-preview");
+
+    if(files === 0){
+        $imagePreview.modal('hide');
+        alert("File(s) missing");
+        return false;
+    }
+
+    const filesStream = [];
+    let imgData;
+    for (var i = 0, len = localStorage.getItem("files_length"); i < len; ++i) {
+        imgData = JSON.parse(localStorage.getItem("image_" + i));
+
+        if (imgData !== null) {
+            filesStream.push(imgData);
+            localStorage.removeItem("image_" + i)
+        }
+    }
+
+    const data = new FormData();
+
+    $.each(filesStream, function(i, file) {
+        // console.log(file);
+        let item = dataURLtoFile(file.file_data, file.file_name);
+        // console.log(item);
+        data.append('file'+i, item);
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: '<server_url_here>',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data : data,
+        success: function(result){
+            if(result.status){
+
+                $.each(result.data, function(i, imagesData) {
+                    console.log(imagesData)
+                });
+
+                $imagePreview.modal('hide');
+            }else{
+                alert("Something went wrong");
+            }
+        },
+        error: function(err){
+            console.log(err);
+        }
+    })
+}
+
+function dataURLtoFile(dataurl, filename) {
+
+    var arr = dataurl.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, {type:mime});
 }
