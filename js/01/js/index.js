@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('files_length', items.length);
             for( let i = 0, len = items.length; i < len; ++i ) {
                 const item = items[i];
-                console.log("item => ", item);
+                // console.log("item => ", item);
                 if( item.kind === "file" && (item.type.indexOf('image/') !== -1)) {
                     if(i === 0){
                         _modal = $("#display-images-preview");
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // console.log("item.getAsFile => ", item.getAsFile());
                 }
             }
-
+            // console.log(localStorage.getItem('files_length'));
         }else{
             alert('Please! click into an textarea');
             return false;
@@ -35,7 +35,7 @@ function encodeImageFileAsURL(element, i, filename) {
     const reader = new FileReader();
 
     reader.onload = function() {
-        $("#slider").append('<div class="slide" data-slider="'+i+'"><button type="button" class="btn-close remove-pasted-image" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove" data-img-index="'+i+'">x</button><img src="'+reader.result+'" style="width: 100%;border: 1px solid;"/></div>');
+        $("#slider").append('<div class="slide" data-slider="'+i+'"><button type="button" class="btn-close remove-pasted-image" data-img-index="'+i+'">x</button><img src="'+reader.result+'" style="width: 100%;border: 1px solid;"/></div>');
         $("#slider_nav").append('<li data-nav="'+i+'" class="btn_slide '+(i===0 ? 'current' : '')+'"><img src="'+reader.result+'" style="width:80px;height:70px;border: 1px solid;" alt=""/></li>');
 
         var fileData = {
@@ -113,9 +113,9 @@ function sendFilesToServer() {
     const data = new FormData();
 
     $.each(filesStream, function(i, file) {
-        // console.log(file);
+        console.log(file);
         let item = dataURLtoFile(file.file_data, file.file_name);
-        // console.log(item);
+        console.log(item);
         data.append('file'+i, item);
     });
 
